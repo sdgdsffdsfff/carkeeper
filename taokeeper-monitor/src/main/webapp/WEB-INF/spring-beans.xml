@@ -8,7 +8,7 @@
     <bean id="zookeeperConfigService" class="com.taobao.taokeeper.monitor.service.impl.ZookeeperConfigServiceImpl"/>
 
     <!-- userAuthorityInit -->
-    <bean id="SohuKeeper" class="com.taobao.taokeeper.monitor.core.SohuKeeperInit" init-method="init"/>
+    <bean id="myKeeper" class="com.taobao.taokeeper.monitor.core.MyKeeperInit" init-method="init"/>
 
 	<bean id="zooKeeperClusterDAO" class="com.taobao.taokeeper.dao.impl.ZooKeeperClusterDAOImpl" />
 	<bean id="alarmSettingsDAO" class="com.taobao.taokeeper.dao.impl.AlarmSettingsDAOImpl" />

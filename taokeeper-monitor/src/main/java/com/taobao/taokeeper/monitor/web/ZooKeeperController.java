@@ -164,7 +164,7 @@ public class ZooKeeperController extends BaseController {
 
                 //现在要加入一个默认的报警
                 String dataPath = "/opt/taokeeper-monitor";
-                alarmSettingsDAO.addAlarmSettings(new AlarmSettings(clusterId, "5", "60", "70", "2", "carlosfu@163.com", "13820794024", "leifu@sohu-inc.com", "200", "1000", dataPath, dataPath, "70", ""));
+                alarmSettingsDAO.addAlarmSettings(new AlarmSettings(clusterId, "5", "60", "70", "2", "carlosfu@163.com", "13820794024", "carlosfu@163.com", "200", "1000", dataPath, dataPath, "70", ""));
 
                 //启动自检
                 if (null != zooKeeperCluster.getServerList() && !zooKeeperCluster.getServerList().isEmpty()) {
