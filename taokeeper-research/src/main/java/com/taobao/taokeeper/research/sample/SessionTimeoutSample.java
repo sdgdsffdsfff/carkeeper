@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.log4j.PropertyConfigurator;
-import org.apache.log4j.xml.DOMConfigurator;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
