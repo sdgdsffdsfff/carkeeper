@@ -3,7 +3,6 @@ package com.taobao.taokeeper.monitor.service.impl;
 import com.taobao.taokeeper.model.ZooKeeperCluster;
 import com.taobao.taokeeper.monitor.domain.KeeperNode;
 import com.taobao.taokeeper.monitor.service.ZookeeperConfigService;
-import common.toolkit.java.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
