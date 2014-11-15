@@ -1,103 +1,110 @@
 package com.taobao.taokeeper.reporter.alarm;
 
-import static common.toolkit.java.constant.SymbolConstant.COMMA;
-
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.taobao.taokeeper.common.constant.SystemConstant;
 import com.taobao.taokeeper.model.type.Message;
 import common.toolkit.java.entity.Message.MessageType;
 import common.toolkit.java.util.StringUtil;
-import common.toolkit.java.util.collection.ListUtil;
 import common.toolkit.java.util.io.NetUtil;
 
 /**
  * Description: 淘宝内部使用：旺旺消息与手机短信
- * 
+ *
  * @author 银时 yinshi.nc@taobao.com
  * @Date Dec 26, 2011
  */
 public class TbMessageSender implements MessageSender {
 
-	private static final Logger LOG = LoggerFactory.getLogger( TbMessageSender.class );
+    private static final Logger LOG = LoggerFactory.getLogger(TbMessageSender.class);
 
-	private Message[] messages;
+    /**
+     * 短信http接口url
+     */
+    private static String smsURL = "http://index.tv.sohuno.com:9989/alert/sms/send?phone=${phone}&msg=${msg}";
 
-	public TbMessageSender( Message... messages ) {
-		this.messages = messages;
-	}
+    /**
+     * 邮箱http接口url
+     */
+    private static String emailURL = "http://index.tv.sohuno.com:9989/alert/mail/send?title=${title}&content=${content}&receiver=${receiver}";
 
-	@Override
-	public void run() {
+    private Message[] messages;
 
-		if ( null == messages || 0 == messages.length || StringUtil.isBlank( SystemConstant.IP_OF_MESSAGE_SEND ) ){
-			LOG.info( "[TaoKeeper]No need to send message: messages.length: " + messages + ", IP_OF_MESSAGE_SEND=" + SystemConstant.IP_OF_MESSAGE_SEND );
-			return;
-		}
+    public TbMessageSender(Message... messages) {
+        this.messages = messages;
+    }
 
-		for ( Message message : this.messages ) {
-			try {
-				this.sendMessage( StringUtil.trimToEmpty( message.getTargetAddresses() ), StringUtil.trimToEmpty( message.getSubject() ),
-						StringUtil.trimToEmpty( message.getContent() ), StringUtil.trimToEmpty( message.getType().toString() ) );
-				LOG.info( "[TaoKeeper]Message send success: " + message );
-			} catch ( Exception e ) {
-				e.printStackTrace();
-				LOG.error( "Message send error: " + message + e.getMessage() );
-			}
-		}
+    @Override
+    public void run() {
 
-	}
+        if (null == messages || 0 == messages.length) {
+            LOG.info("[TaoKeeper]No need to send message: messages.length: " + messages);
+            return;
+        }
 
-	/**
-	 * 发送消息
-	 * 
-	 * @param targetAddresses
-	 * @param subject
-	 * @param content
-	 *            message content
-	 * @param channel
-	 *            messate tyep:sms,email,wangwang
-	 * @return
-	 * @throws Exception 
-	 */
-	private boolean sendMessage( String targetAddresses, String subject, String content, String channel ) throws Exception {
+        for (Message message : this.messages) {
+            try {
+                this.sendMessage(StringUtil.trimToEmpty(message.getTargetAddresses()), StringUtil.trimToEmpty(message.getSubject()),
+                        StringUtil.trimToEmpty(message.getContent()), StringUtil.trimToEmpty(message.getType().toString()));
+                LOG.info("[TaoKeeper]Message send success: " + message);
+            } catch (Exception e) {
+                e.printStackTrace();
+                LOG.error("Message send error: " + message + e.getMessage());
+            }
+        }
 
-		if ( StringUtil.isBlank( targetAddresses ) || StringUtil.isBlank( channel ) )
-			return false;
+    }
 
-		
-		List<String> targetAddressList = ListUtil.parseList( StringUtil.trimToEmpty( targetAddresses ), COMMA );
+    /**
+     * 发送消息
+     *
+     * @param targetAddresses
+     * @param subject
+     * @param content         message content
+     * @param channel         messate tyep:sms,email
+     * @return
+     * @throws Exception
+     */
+    private boolean sendMessage(String targetAddresses, String subject, String content, String channel) throws Exception {
 
-		Map<String, String> map = new HashMap<String, String>();
-		map.put( "ip", SystemConstant.IP_OF_MESSAGE_SEND );
-		map.put( "subject", URLEncoder.encode( subject, "UTF-8" ) );
-		map.put( "content", URLEncoder.encode( content, "UTF-8" ) );
-		String url = "";
-		if ( channel.equalsIgnoreCase( MessageType.WANGWANG.toString() ) ) {
+        if (StringUtil.isBlank(targetAddresses) || StringUtil.isBlank(channel))
+            return false;
 
-			for ( String targetAddress : targetAddressList ) {
+        Map<String, String> map = new HashMap<String, String>();
+        String url = "";
+        if (channel.equalsIgnoreCase(MessageType.EMAIL.toString())) {
+            map.put("title", URLEncoder.encode(subject, "UTF-8"));
+            map.put("content", URLEncoder.encode(content, "UTF-8"));
+            map.put("receiver", URLEncoder.encode(targetAddresses, "UTF-8"));
+            url = StringUtil.replacePlaceholder(emailURL, map);
+            String responseStr = HttpRequestUtil.get(url, "UTF-8");
+            LOG.warn("responseStr={}", responseStr);
+        } else if (channel.equalsIgnoreCase(MessageType.SMS.toString())) {
+            String phone = targetAddresses;
+            String message = "subject:" + subject + ".content:" + content;
+            //过滤空格
+            message = message.replaceAll(" ", "");
+            //避免过长
+            if (message.length() > 100) {
+                message = message.substring(0, 100);
+            }
+            message = URLEncoder.encode(message, "UTF-8");
 
-				map.put( "messageType", "sendWangWangMessage" );
-				map.put( "targetAddress", URLEncoder.encode( targetAddress,"UTF-8" ) );
-				url = StringUtil.replacePlaceholder( SystemConstant.URL_TEMPLEMENT_OF_MESSAG_SEND, map );
-			}
-		} else if ( channel.equalsIgnoreCase( MessageType.SMS.toString() ) ) {
+            map.put("phone", phone);
+            map.put("msg", message);
 
-			for ( String targetAddress : targetAddressList ) {
-				map.put( "messageType", "sendWangWangMessage" );
-				map.put( "targetAddress", URLEncoder.encode( targetAddress, "UTF-8" ) );
-				url = StringUtil.replacePlaceholder( SystemConstant.URL_TEMPLEMENT_OF_MESSAG_SEND, map );
-			}
-		}
-		LOG.info( "[Taokeeper]Send message: " + url );
-		return "ok".equalsIgnoreCase( NetUtil.getContentOfUrl( url ) );
+            url = StringUtil.replacePlaceholder(smsURL, map);
+            String responseStr = HttpRequestUtil.get(url, "UTF-8");
+            LOG.warn("responseStr={}", responseStr);
+        }
+        LOG.info("[Taokeeper]Send message: " + url);
+        return "ok".equalsIgnoreCase(NetUtil.getContentOfUrl(url));
 
-	}
+    }
+
 
 }
