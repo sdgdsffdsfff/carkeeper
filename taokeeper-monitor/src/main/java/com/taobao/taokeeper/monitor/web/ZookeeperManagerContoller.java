@@ -31,12 +31,12 @@ public class ZookeeperManagerContoller extends BaseController {
     public Map<String, Object> createKeeperNode(String path, String name, String value, String clusterId, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<String, Object>();
         boolean isSuccess = false;
-        Object loginUserName = request.getAttribute("loginUserName");
+//        Object loginUserName = request.getAttribute("loginUserName");
         try {
-            if (loginUserName == null || StringUtils.isBlank(loginUserName.toString())) {
-                map.put("error", "请登录index系统");
-                return map;
-            }
+//            if (loginUserName == null || StringUtils.isBlank(loginUserName.toString())) {
+//                map.put("error", "请登录index系统");
+//                return map;
+//            }
             ZooKeeperCluster zooKeeperCluster = getZooKeeperCluster(clusterId);
             if (null == zooKeeperCluster) {
                 return null;
@@ -91,12 +91,12 @@ public class ZookeeperManagerContoller extends BaseController {
     public Map<String, Object> deleteKeeperNode(String path, String clusterId, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<String, Object>();
         boolean isSuccess = false;
-        Object loginUserName = request.getAttribute("loginUserName");
+//        Object loginUserName = request.getAttribute("loginUserName");
         try {
-            if (loginUserName == null || StringUtils.isBlank(loginUserName.toString())) {
-                map.put("error", "请登录index 系统");
-                return map;
-            }
+//            if (loginUserName == null || StringUtils.isBlank(loginUserName.toString())) {
+//                map.put("error", "请登录index 系统");
+//                return map;
+//            }
             ZooKeeperCluster zooKeeperCluster = getZooKeeperCluster(clusterId);
             if (null == zooKeeperCluster) {
                 map.put("error", "zooKeeper集群不存在.");
@@ -128,12 +128,12 @@ public class ZookeeperManagerContoller extends BaseController {
     public Map<String, Object> updateKeeperNodeData(String path, String value, String clusterId, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<String, Object>();
         boolean isSuccess = false;
-        Object loginUserName = request.getAttribute("loginUserName");
+//        Object loginUserName = request.getAttribute("loginUserName");
         try {
-            if (loginUserName == null || StringUtils.isBlank(loginUserName.toString())) {
-                map.put("error", "请登录index系统");
-                return map;
-            }
+//            if (loginUserName == null || StringUtils.isBlank(loginUserName.toString())) {
+//                map.put("error", "请登录index系统");
+//                return map;
+//            }
             ZooKeeperCluster zooKeeperCluster = getZooKeeperCluster(clusterId);
             if (null == zooKeeperCluster) {
                 return null;

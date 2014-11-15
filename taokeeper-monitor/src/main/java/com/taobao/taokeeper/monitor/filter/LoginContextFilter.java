@@ -2,13 +2,13 @@ package com.taobao.taokeeper.monitor.filter;
 
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * User: yijunzhang
- * Date: 13-12-26
- * Time: 下午4:24
+ * 
+ * @author leifu
+ * @Date 2014年11月15日
+ * @Time 上午11:58:07
  */
 public class LoginContextFilter implements Filter {
 
@@ -21,12 +21,10 @@ public class LoginContextFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
         chain.doFilter(request,response);
     }
 
     @Override
     public void destroy() {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }
