@@ -79,7 +79,4 @@ CREATE TABLE `zookeeper_user` (
 
 replace into zookeeper_user(cluster_id,user_name,status)
 values
-(0,'yijunzhang',2),
-(0,'haibogu',2),
-(0,'yongminghe',2),
-(0,'xichen200197',2);
+(0,'vrs-zookeeper',2);
