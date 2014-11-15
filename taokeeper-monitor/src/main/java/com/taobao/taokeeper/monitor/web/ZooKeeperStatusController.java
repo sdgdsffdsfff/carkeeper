@@ -1,5 +1,4 @@
 package com.taobao.taokeeper.monitor.web;
-import static common.toolkit.java.constant.EmptyObjectConstant.EMPTY_STRING;
 import static common.toolkit.java.constant.SymbolConstant.COLON;
 
 import java.io.IOException;

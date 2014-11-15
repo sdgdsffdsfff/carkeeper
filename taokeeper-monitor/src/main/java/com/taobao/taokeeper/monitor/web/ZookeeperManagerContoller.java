@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -195,7 +194,7 @@ public class ZookeeperManagerContoller extends BaseController {
             }
             KeeperNode keeperNode = zookeeperConfigService.getChildKeeperNode(path, curatorFramework);
             if (keeperNode != null && keeperNode.getChildList() != null) {
-                List<Map<String, Object>> resultList = new ArrayList();
+                List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
                 for (KeeperNode node : keeperNode.getChildList()) {
                     Map<String, Object> map = new LinkedHashMap<String, Object>();
                     map.put("id", node.getId());

@@ -4,9 +4,6 @@ import com.taobao.taokeeper.model.ZooKeeperCluster;
 import com.taobao.taokeeper.monitor.domain.KeeperNode;
 import org.apache.curator.framework.CuratorFramework;
 
-import java.util.List;
-import java.util.concurrent.ConcurrentMap;
-
 /**
  * User: yijunzhang
  * Date: 13-12-25

@@ -1,6 +1,5 @@
 package com.taobao.taokeeper.monitor.core.task;
 
-import static com.taobao.taokeeper.common.constant.SystemConstant.DELAY_MINS_OF_TWO_CYCLE_ALIVE_CHECK_ZOOKEEPER;
 import static com.taobao.taokeeper.common.constant.SystemConstant.MINS_RATE_OF_COLLECT_HOST_PERFORMANCE;
 import static common.toolkit.java.constant.SymbolConstant.COLON;
 

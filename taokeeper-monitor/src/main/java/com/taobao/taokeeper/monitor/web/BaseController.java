@@ -14,7 +14,6 @@ import com.taobao.taokeeper.dao.SettingsDAO;
 import com.taobao.taokeeper.dao.ZooKeeperClusterDAO;
 import com.taobao.taokeeper.monitor.service.ReportService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;

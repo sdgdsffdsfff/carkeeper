@@ -1,31 +1,22 @@
 package com.taobao.taokeeper.monitor.core;
 
-import com.taobao.taokeeper.common.GlobalInstance;
-import com.taobao.taokeeper.common.SystemInfo;
-import com.taobao.taokeeper.common.constant.SystemConstant;
-import com.taobao.taokeeper.dao.SettingsDAO;
-import com.taobao.taokeeper.model.TaoKeeperSettings;
-import com.taobao.taokeeper.model.type.Message;
-import com.taobao.taokeeper.monitor.core.task.*;
-import com.taobao.taokeeper.monitor.core.task.runable.ClientThroughputStatJob;
-import com.taobao.taokeeper.reporter.alarm.TbMessageSender;
-import common.toolkit.java.constant.BaseConstant;
-import common.toolkit.java.exception.DaoException;
-import common.toolkit.java.util.ObjectUtil;
-import common.toolkit.java.util.StringUtil;
-import common.toolkit.java.util.ThreadUtil;
-import common.toolkit.java.util.db.DbcpUtil;
-import common.toolkit.java.util.number.IntegerUtil;
-import common.toolkit.java.util.system.SystemUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
+import java.util.Timer;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
-import java.util.Properties;
-import java.util.Timer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.taobao.taokeeper.common.constant.SystemConstant;
+import com.taobao.taokeeper.monitor.core.task.HostPerformanceCollectTask;
+import com.taobao.taokeeper.monitor.core.task.ZooKeeperALiveCheckerJob;
+import com.taobao.taokeeper.monitor.core.task.ZooKeeperClusterMapDumpJob;
+import com.taobao.taokeeper.monitor.core.task.ZooKeeperNodeChecker;
+import com.taobao.taokeeper.monitor.core.task.ZooKeeperStatusCollectJob;
+import com.taobao.taokeeper.monitor.core.task.runable.ClientThroughputStatJob;
+import common.toolkit.java.constant.BaseConstant;
+import common.toolkit.java.util.ThreadUtil;
 
 /**
  * Description: System Initialization

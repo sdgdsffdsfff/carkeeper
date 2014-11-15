@@ -1,5 +1,4 @@
 package com.taobao.taokeeper.monitor.web;
-import static common.toolkit.java.constant.EmptyObjectConstant.EMPTY_STRING;
 
 import java.util.ArrayList;
 import java.util.Collections;

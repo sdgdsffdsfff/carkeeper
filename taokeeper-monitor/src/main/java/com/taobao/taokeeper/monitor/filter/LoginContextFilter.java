@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class LoginContextFilter implements Filter {
 
-    private static final String KEEPER_DEBUG = "keeperDebug";
+//    private static final String KEEPER_DEBUG = "keeperDebug";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
