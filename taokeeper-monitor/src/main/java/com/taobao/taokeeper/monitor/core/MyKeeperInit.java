@@ -36,7 +36,7 @@ import java.util.Properties;
  * Date: 13-12-26
  * Time: 下午4:53
  */
-public class SohuKeeperInit {
+public class MyKeeperInit {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private String path;
@@ -45,6 +45,7 @@ public class SohuKeeperInit {
 
     private ZkListener zkListener;
 
+    public final static String author = "vrs-zookeeper";
 
     @Resource(name = "zooKeeperClusterDAO")
     private ZooKeeperClusterDAO zooKeeperClusterDAO;
@@ -93,10 +94,10 @@ public class SohuKeeperInit {
 
         //初始化作者
         try {
-            String authorPath = path + "/yijunzhang";
+            String authorPath = path + "/" + author;
             Stat stat = zkClient.checkExists().forPath(authorPath);
             if (stat == null) {
-                zkClient.create().forPath(path + "/yijunzhang", "0,2".getBytes());
+                zkClient.create().forPath(path + "/" + author, "0,2".getBytes());
             }
         } catch (Exception e) {
             throw new RuntimeException("初始化作者失败:" + e.getMessage(), e);
