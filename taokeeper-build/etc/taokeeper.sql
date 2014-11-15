@@ -38,7 +38,7 @@ CREATE TABLE `taokeeper_settings` (
 -- ----------------------------
 -- Records of taokeeper_settings
 -- ----------------------------
-INSERT INTO `taokeeper_settings` VALUES ('1', 'sohuTaoKeeper', '5', 'sohuKeeper');
+INSERT INTO `taokeeper_settings` VALUES ('1', 'carTaoKeeper', '5', 'carKeeper');
 
 
 -- ----------------------------
